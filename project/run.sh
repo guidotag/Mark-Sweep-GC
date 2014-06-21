@@ -7,5 +7,6 @@ output_file=gc.out
 
 make clean
 make gc
+echo "Running..."
 #./bin/gc $function -f $output_file -t $num_objects $num_fields $pr_adj $pr_src
 ./bin/gc $function -v $num_objects $num_fields $pr_adj $pr_src

@@ -23,7 +23,7 @@ OBJS_TEST_W_DIR=$(addprefix $(SRC_TEST_DIR), $(OBJS_TEST))
 BIN_W_DIR=$(BIN_DIR)$(BIN)
 BIN_TEST_W_DIR=$(BIN_DIR)$(BIN_TEST)
 
-.PHONY: all clean run gc tests
+.PHONY: all clean gc tests
 
 all: gc tests
 
@@ -35,9 +35,6 @@ tests: $(OBJS_W_DIR) $(OBJ_MAIN_TEST_W_DIR) $(OBJS_TEST_W_DIR)
 	
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
-	
-run: gc
-	./bin/gc
 	
 clean:
 	rm -f $(OBJ_MAIN_W_DIR)

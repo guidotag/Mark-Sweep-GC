@@ -1,3 +1,5 @@
+#Valgrind test script
+
 VALGRIND=valgrind
 BIN=./bin/tests
 OKVALGRIND=0
