@@ -59,7 +59,7 @@ void doit(void (*mark_sweep)(),
 				uintptr_t *ptr = (uintptr_t *)((uintptr_t) objects[i] + 8 * j);
 				
 				/* Two pointers could reference the same object */
-				*ptr = objects[random(0, num_objects - 1)];
+				*ptr = objects[_random(0, num_objects - 1)];
 			}
 		}
 	}
@@ -87,27 +87,28 @@ void doit(void (*mark_sweep)(),
 }
 
 void print_help(){
-	printf("Usage of the program:\n");
+	// #define KNRM  "\x1B[0m"
+	printf("Usage:\n");
 	printf("\t%s <options> <implementation> [parameters]\n", program_name);
 	printf("The available options are:\n");
-	printf("\t> -h, -help\n\tPrints help information\n");
-	printf("\t> -v, -verbose\n\tPrints additional information alongside the execution of the program\n");
-	printf("\t> -f, -file <file_name>\n\tOutput to a specific file\n");
-	printf("\t> -t, -timeit\n\tMeasure execution time\n");
+	printf("\t-h, -help\n\t\tPrints help information\n");
+	printf("\t-v, -verbose\n\t\tPrints additional information alongside the execution of the program\n");
+	printf("\t-f, -file <file_name>\n\t\tOutput to a specific file\n");
+	printf("\t-t, -timeit\n\t\tMeasure execution time\n");
 	printf("The available Mark-Sweep implementations are:\n");
-	printf("\t> std\n");
-	printf("\t> fast\n");
+	printf("\tstd\n");
+	printf("\tfast\n");
 	printf("For both implementations, the parameters are the following ones:\n");
-	printf("\t> num_objects\n\tThe number of objects we want to create\n");
-	printf("\t> num_fields\n\tThe maximum number of pointers an object can have\n");
-	printf("\t> pr_adj\n\tThe graph density parameter\n");
-	printf("\t> pr_src\n\tThe roots density parameter\n");
+	printf("\tnum_objects\n\t\tThe number of objects we want to create\n");
+	printf("\tnum_fields\n\t\tThe maximum number of pointers an object can have\n");
+	printf("\tpr_adj\n\t\tThe graph density parameter\n");
+	printf("\tpr_src\n\t\tThe roots density parameter\n");
 	printf("Output's format:\n");
-	printf("\tnum_objects num_fields pr_adj pr_src t\n");
+	printf("\tnum_objects num_fields pr_adj pr_src [tsc]\n");
 	printf("where\n");
-	printf("\tt = Mark-Sweep selected implementation tsc\n");
+	printf("\ttsc = execution's TSC\n");
 	printf("Example call:\n");
-	printf("\t%s -f output.out fast 100 50 0.75 0.1\n", program_name);
+	printf("\t%s -f output.txt -t fast 100 50 0.75 0.1\n", program_name);
 }
 
 int main(int argc, char *argv[]){
@@ -120,6 +121,7 @@ int main(int argc, char *argv[]){
 	bool verbose = FALSE;
 	bool timeit = FALSE;
 	char output_file[10 + OUTPUT_FILE_NAME_MAX_LEN];
+	memset(output_file, 0, 10 + OUTPUT_FILE_NAME_MAX_LEN);
 	
 	program_name = argv[0];
 	
@@ -181,10 +183,10 @@ int main(int argc, char *argv[]){
 	num_fields = atoi(argv[argc - 3]);
 	pr_adj = atof(argv[argc - 2]);
 	pr_src = atof(argv[argc - 1]);
-		
+
+	FILE *file = NULL;
 	if(redirect_output){
-		fopen(output_file, "a");
-		freopen(output_file, "a", stdout);
+		file = freopen(output_file, "w", stdout);
 	}
 	
 	printf("%i %i %f %f ", num_objects, num_fields, pr_adj, pr_src);
@@ -192,6 +194,10 @@ int main(int argc, char *argv[]){
 	doit(mark_sweep, num_objects, num_fields, pr_adj, pr_src, verbose, timeit);
 	
 	printf("\n");
+
+	if(redirect_output){
+		fclose(file);
+	}
 	
 	return EXIT_SUCCESS;
 }

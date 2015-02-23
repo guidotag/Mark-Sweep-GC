@@ -52,7 +52,7 @@ uint _ceil(float x){
 	return (x > (int) x) ? ((int) x + 1) : ((int) x);
 }
 
-int random(int a, int b){
+int _random(int a, int b){
 	assert(a <= b);
 	double u = rand() / (double) RAND_MAX;
 	

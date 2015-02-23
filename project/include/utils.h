@@ -39,7 +39,7 @@ uint _ceil(float x);
  * 
  * To make it work randomly, put srand(time(NULL)) at the beggining of the program execution.
  */
-int random(int a, int b);
+int _random(int a, int b);
 
 /*
  * Prints a complete line with the separator sep.
