@@ -92,7 +92,7 @@ void print_help(){
 	printf("\t%s <options> <implementation> [parameters]\n", program_name);
 	printf("The available options are:\n");
 	printf("\t-h, -help\n\t\tPrints help information\n");
-	printf("\t-v, -verbose\n\t\tPrints additional information alongside the execution of the program\n");
+	printf("\t-v, -verbose\n\t\tPrints additional information along the execution of the program\n");
 	printf("\t-f, -file <file_name>\n\t\tOutput to a specific file\n");
 	printf("\t-t, -timeit\n\t\tMeasure execution time\n");
 	printf("The available Mark-Sweep implementations are:\n");
