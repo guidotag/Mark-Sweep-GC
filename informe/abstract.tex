@@ -1,0 +1,3 @@
+\section{Abstract}
+
+Presentamos los conceptos fundamentales involucrados en la construcción de un Mark-Sweep Garbage Collector. Luego de dar un panorama general del tema, presentamos dos funciones de marcado. Ambas ejecutan un DFS sobre el grafo de objetos, pero se diferencian en la cantidad de memoria que utilizan. Mientras que una de ellas no requiere memoria adicional además de la utilizada por la pila de DFS, la otra utiliza, para acelerar el proceso, un conjunto con las direcciones en memoria de los objetos. Calculamos la complejidad temporal de ambos métodos. Presentamos las mediciones de sus tiempos de ejecución realizadas. Terminamos con un análisis de la utilidad práctica de cada versión.

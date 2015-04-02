@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="250"
+   height="120"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="cell.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="138.19639"
+     inkscape:cy="20.720244"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1855"
+     inkscape:window-height="1056"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-932.36218)">
+    <rect
+       style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:1.63300395;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect2985"
+       width="275.99985"
+       height="103.6098"
+       x="6.8962102"
+       y="935.95386" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.26573741;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 84.962115,936.46905 c 0,102.96745 0.80272,102.96745 0.80272,102.96745"
+       id="path3757"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:21.70999908px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="14.405702"
+       y="972.98108"
+       id="text3759"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3761"
+         x="14.405702"
+         y="972.98108">$mark\_bit$</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:21.70999908px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="37.364391"
+       y="1025.847"
+       id="text3763"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3765"
+         x="37.364391"
+         y="1025.847">$\cdots$</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:21.70999908px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="22.155176"
+       y="951.39398"
+       id="text3767"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="22.155176"
+         y="951.39398"
+         id="tspan3771">\textbf{Header}</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:21.70999908px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="160.91483"
+       y="951.68994"
+       id="text3775"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3777"
+         x="160.91483"
+         y="951.68994">\textbf{Objeto}</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:21.70999908px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="174.27702"
+       y="1032.0242"
+       id="text3798"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3800"
+         x="174.27702"
+         y="1032.0242">$\cdots$</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:21.70999908px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="14.719755"
+       y="995.42004"
+       id="text3759-8"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3761-1"
+         x="14.719755"
+         y="995.42004">$size$</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.93642277;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 7.7777985,955.84046 c 275.2355915,1.0197 275.2516115,0.1043 275.2516115,0.1043"
+       id="path3757-1"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:21.70999908px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="95.518623"
+       y="973.65619"
+       id="text3798-2"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3800-2"
+         x="95.518623"
+         y="973.65619">$str = ``variable&quot;$</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:21.70999908px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="95.518623"
+       y="992.849"
+       id="text3798-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="95.518623"
+         y="992.849"
+         id="tspan3959">$ptr = 0\text{x}1234$</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:21.70999908px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="95.86618"
+       y="1014.41"
+       id="text3798-1-9"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="95.86618"
+         y="1014.41"
+         id="tspan3959-0">$var = 10$</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.89999998;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 6.3209333,978.38004 c 78.7516867,1.0197 78.7562677,0.1043 78.7562677,0.1043"
+       id="path3757-1-5"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.89999998;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 6.5838067,1001.6136 c 78.7516873,1.0197 78.7562673,0.1043 78.7562673,0.1043"
+       id="path3757-1-5-5"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

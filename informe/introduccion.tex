@@ -1,0 +1,223 @@
+\section{Introducción}
+En ciencias de la computación, un garbage collector (o simplemente GC) es un mecanismo automático para la administración de la memoria. En particular, este mecanismo se encarga de liberar los recursos (porciones de memoria) solicitados por un programa, que ya no se encuentran en uso. Esto permite al programador desligarse de la tarea de desalojo de recursos, simplificándole la tarea de programar y depurar. Como contraparte, al tiempo de ejecución de un programa se le suma un tiempo de procesamiento asociado al recolector, haciendo que ésta no sea una técnica apta para aplicaciones cuya performance sea crítica.
+
+El problema fundamental que debe resolver un GC es el de determinar cuáles de los objetos en memoria ya no se encuentran en uso. En un programa cualquiera, se mantienen referencias a objetos que se encuentran en la memoria principal. Durante cierto período de la ejecución esas referencias son útiles, es decir, las utilizamos activamente para acceder a los objetos asociados. Posteriormente, en la misma ejecución, es posible que ya no sea de nuestro interés mantener algunas de esas referencias, y por lo tanto queremos que el recurso apuntado, en caso de que no sea accesible desde otro lugar de nuestro programa, sea desalojado.
+
+Resulta indispensable tener un modelo que provea una representación clara de los objetos en memoria y las referencias existentes entre ellos. Para esto, consideramos un grafo dirigido $G = (V, E)$ cuyos vértices $V = \{o_1, \cdots, o_n\}$ representan los objetos en memoria, y tal que hay una arista $o_i \to o_j$ si y solo si $o_i$ tiene una referencia al objeto $o_j$. A este digrafo lo llamaremos \textit{grafo de objetos}. 
+
+Para ejemplificar, consideremos el caso de una lista simplemente enlazada de 4 nodos. Un grafo asociado a este esquema de objetos es el indicado en la Figura \ref{fig:grafo1}. El nodo marcado en rojo tiene una propiedad especial: en general, en una implementación de una lista mantenemos, desde nuestro programa, una referencia directa al primer nodo. En este sentido, decimos que un objeto es \textit{root} si tenemos una referencia directa desde el programa hacia ese objeto. En lo que sigue, siempre distinguiremos a los nodos root con rojo.
+ 
+Una de las técnicas más conocidas de garbage collection es la llamada \textit{Mark-Sweep}. Específicamente, Mark-Sweep es una familia de métodos, que se componen de dos partes: la primera parte de marcado de objetos muertos, y la segunda parte de barrido o liberación de los recursos asignados a tales objetos. Dependiendo de la implementación de la etapa de marcado y de barrido, obtendremos distintos algoritmos de Mark-Sweep.
+ 
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[->,>=stealth', auto, node distance=1.5cm, font=\sffamily\bfseries]
+  
+  \tikzstyle{nonroot}=[draw, circle, fill = black, text = black, minimum width = 6.5pt, inner sep=0pt]
+  \tikzstyle{root}=[draw, circle, fill = red, text = black, minimum width = 6.5pt, inner sep=0pt]
+
+  \node [root] (1) [label=below:$o_1$] {};
+  \node [nonroot] (2) [right of = 1, label=below:$o_2$] {};
+  \node [nonroot] (3) [right of = 2, label=below:$o_3$] {};
+  \node [nonroot] (4) [right of = 3, label=below:$o_4$] {};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (1) edge node [right] {} (2)
+    (2) edge node [right] {} (3)
+    (3) edge node [right] {} (4);
+\end{tikzpicture}
+\end{center}
+\caption{Grafo de objetos para una lista}
+\label{fig:grafo1}
+\end{figure}
+
+En el caso de la Figura \ref{fig:grafo1}, si a lo largo del programa se descarta la referencia a $o_1$ entonces $o_1$ deja de ser root y todos los objetos pasan a ser inaccesibles y por lo tanto el GC liberará la memoria que ocupan. En el grafo de la Figura \ref{fig:grafo2}, al eliminar la referencia a $o_1$ el objeto $o_2$ se torna inaccesible y por lo tanto será borrado. Sin embargo todos los demás objetos son accesibles a través de $o_4$ y deben permanecer en memoria, aún siendo accesibles desde $o_2$.
+
+Hay situaciones en las que no es tan evidente qué memoria debe liberarse, por ejemplo en el grafo de la Figura \ref{fig:grafo3}. Suponiendo que se elimina la referencia al nodo root $o_6$, ¿qué nodos dejan de ser accesibles? En general, dado un grafo de objetos, al ejecutar el GC los nodos que deben ser barridos son exactamente aquellos que no son alcanzables desde ninguno de los nodos root. 
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[->,>=stealth', auto, node distance=1.5cm, font=\sffamily\bfseries]
+  
+  \tikzstyle{nonroot}=[draw, circle, fill = black, text = black, minimum width = 6.5pt, inner sep=0pt]
+  \tikzstyle{root}=[draw, circle, fill = red, text = black, minimum width = 6.5pt, inner sep=0pt]
+
+  \node [root] (1) [label=right:$o_1$] {};
+  \node [nonroot] (2) [below of = 1, label=right:$o_2$] {};
+  \node [nonroot] (3) [below right of = 2, label=above:$o_3$] {};
+  \node [nonroot] (5) [below left of = 2, label=above:$o_5$] {};
+  \node [nonroot] (6) [below left of = 3, label=right:$o_6$] {};
+  \node [root] (4) [left of = 5, label=above:$o_4$] {};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (1) edge node [below] {} (2)
+    (2) edge node [below right] {} (3)
+    (2) edge node [below left] {} (5)
+    (4) edge node [right] {} (5)
+    (5) edge node [below right] {} (6)
+    (6) edge node [above right] {} (3);
+\end{tikzpicture}
+\end{center}
+\caption{Grafo de objetos con varios nodos root}
+\label{fig:grafo2}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[->,>=stealth', auto, node distance=1.5cm, font=\sffamily\bfseries]
+  
+  \tikzstyle{nonroot}=[draw, circle, fill = black, text = black, minimum width = 6.5pt, inner sep=0pt]
+  \tikzstyle{root}=[draw, circle, fill = red, text = black, minimum width = 6.5pt, inner sep=0pt]
+  \node [root] (6) at (4.75, 4) [label=below:$o_{6}$] {};
+  \node [root] (11) at (3.5, 0) [label=below:$o_{11}$] {};
+  \node [nonroot] (14) at (4.5, 6) [label=below:$o_{14}$] {};
+  \node [nonroot] (12) at (3.7, 2) [label=below:$o_{12}$] {};
+  \node [nonroot] (5) at (5.5, -0.3) [label=below:$o_5$] {};
+  \node [nonroot] (9) at (1.1, -0.3) [label=below:$o_9$] {};
+  \node [nonroot] (1) at (1.8, 1.65) [label=below:$o_1$] {};
+  \node [nonroot] (3) at (6.75, 2.75) [label=below:$o_3$] {};
+  \node [nonroot] (15) at (3, 3.8) [label=below:$o_{15}$] {};
+  \node [nonroot] (2) at (6, 1.5) [label=below:$o_{2}$] {};
+  \node [nonroot] (16) at (4.25, -2) [label=below:$o_{16}$] {};
+  \node [nonroot] (18) at (-1, 1.8) [label=below:$o_{18}$] {};
+  \node [nonroot] (7) at (6.8, 5) [label=below:$o_{7}$] {};
+  \node [nonroot] (10) at (8.5, 0.75) [label=below:$o_{10}$] {};
+  \node [nonroot] (8) at (1.25, 3.25) [label=below:$o_{8}$] {};
+  \node [nonroot] (4) at (-1.5, 4) [label=below:$o_{4}$] {};
+  \node [nonroot] (13) at (0.5, 5) [label=below:$o_{13}$] {};
+  \node [nonroot] (17) at (2.5, 5.5) [label=below:$o_{17}$] {};
+
+  \path[every node/.style={font=\sffamily\small}]
+  (6) edge node [] {} (14)
+  (6) edge node [] {} (12)
+  (11) edge node [] {} (12)
+  (11) edge node [] {} (5)
+  (11) edge node [] {} (9)
+  (11) edge node [] {} (1)
+  (12) edge node [] {} (3)
+  (12) edge node [] {} (15)
+  (12) edge node [] {} (5)
+  (5) edge node [] {} (2)
+  (5) edge node [] {} (16)
+  (9) edge node [] {} (18)
+  (1) edge node [] {} (18)
+  (3) edge node [] {} (6)
+  (3) edge node [] {} (7)
+  (3) edge node [] {} (10)
+  (15) edge node [] {} (8)
+  (2) edge node [] {} (10)
+  (18) edge node [] {} (8)
+  (18) edge node [] {} (4)
+  (18) edge node [] {} (13)
+  (7) edge node [] {} (14)
+  (8) edge node [] {} (17)
+  (13) edge node [] {} (17);
+\end{tikzpicture}
+\end{center}
+\caption{Grafo de objetos complejo}
+\label{fig:grafo3}
+\end{figure}
+
+%\begin{figure}
+%\label{fig:grafo4}
+%\begin{center}
+%\begin{tikzpicture}[->,>=stealth', auto, node distance=1.5cm, font=\sffamily\bfseries]
+%  
+%  \tikzstyle{nonroot}=[draw, circle, fill = black, text = black, minimum width = 6.5pt, inner sep=0pt]
+%  \tikzstyle{root}=[draw, circle, fill = red, text = black, minimum width = 6.5pt, inner sep=0pt]
+%
+%  \node [root] (1) [] {};
+%  \node [nonroot] (2) [right of = 1] {};
+%  \node [nonroot] (3) [right of = 2] {};
+%  \node [nonroot] (4) [right of = 3] {};
+%  \node [nonroot] (5) [right of = 4] {};
+%  \node [root] (6) [right of = 5] {};
+%  
+%  \node [nonroot] (7) [below of = 1] {};
+%  \node [nonroot] (8) [right of = 7] {};
+%  \node [nonroot] (9) [right of = 8] {};
+%  \node [nonroot] (10) [right of = 9] {};
+%  \node [nonroot] (11) [right of = 10] {};
+%  \node [nonroot] (12) [right of = 11] {};
+%  
+%  \node [nonroot] (13) [below of = 7] {};
+%  \node [nonroot] (14) [right of = 13] {};
+%  \node [nonroot] (15) [right of = 14] {};
+%  \node [nonroot] (16) [right of = 15] {};
+%  \node [nonroot] (17) [right of = 16] {};
+%  \node [nonroot] (18) [right of = 17] {};
+%  
+%  \node [nonroot] (19) [below of = 13] {};
+%  \node [nonroot] (20) [right of = 19] {};
+%  \node [nonroot] (21) [right of = 20] {};
+%  \node [nonroot] (22) [right of = 21] {};
+%  \node [nonroot] (23) [right of = 22] {};
+%  \node [root] (24) [right of = 23] {};
+%  
+%  \node [nonroot] (25) [below of = 19] {};
+%  \node [nonroot] (26) [right of = 25] {};
+%  \node [nonroot] (27) [right of = 26] {};
+%  \node [nonroot] (28) [right of = 27] {};
+%  \node [nonroot] (29) [right of = 28] {};
+%  \node [nonroot] (30) [right of = 29] {};
+%	
+%
+%  \path[every node/.style={font=\sffamily\small}]
+%    (1) edge node [] {} (2)
+%    (2) edge node [] {} (3)
+%    (2) edge node [] {} (8)
+%    (3) edge node [] {} (9)
+%    (4) edge node [] {} (3)
+%    (4) edge node [] {} (5)
+%    (5) edge node [] {} (6)
+%    (6) edge node [] {} (12)
+%    (7) edge node [] {} (2)
+%    (8) edge node [] {} (3)
+%    (8) edge node [] {} (14)
+%    (9) edge node [] {} (4)
+%    (10) edge node [] {} (5)
+%    (10) edge node [] {} (9)
+%    (11) edge node [] {} (5)
+%    (11) edge node [] {} (10)
+%    (11) edge node [] {} (17)
+%    (12) edge node [] {} (11)
+%    (12) edge node [] {} (18)
+%    (13) edge node [] {} (7)
+%    (14) edge node [] {} (21)
+%    (15) edge node [] {} (8)
+%    (15) edge node [] {} (9)
+%    (15) edge node [] {} (21)
+%    (16) edge node [] {} (15)
+%    (16) edge node [] {} (17)
+%    (17) edge node [] {} (10)
+%    (17) edge node [] {} (18)
+%    (19) edge node [] {} (13)
+%    (19) edge node [] {} (14)
+%    (19) edge node [] {} (25)
+%    (20) edge node [] {} (14)
+%    (21) edge node [] {} (20)
+%    (21) edge node [] {} (22)
+%    (21) edge node [] {} (27)
+%    (22) edge node [] {} (23)
+%    (23) edge node [] {} (16)
+%    (23) edge node [] {} (17)
+%    (24) edge node [] {} (18)
+%    (24) edge node [] {} (30)
+%    (25) edge node [] {} (26)
+%    (26) edge node [] {} (19)
+%    (26) edge node [] {} (21)
+%    (27) edge node [] {} (26)
+%    (27) edge node [] {} (28)
+%    (28) edge node [] {} (23)
+%    (28) edge node [] {} (29)
+%    (29) edge node [] {} (23)
+%    (30) edge node [] {} (29)
+%    
+%    
+%    ;
+%\end{tikzpicture}
+%\end{center}
+%\caption{Grafo de objetos complejo}
+%\end{figure}
+
+%Por lo tanto, para detectar tales nodos basta utilizar cualquier algoritmo de búsqueda en un grafo, como por ejemplo DFS, partiendo desde los nodos root.
