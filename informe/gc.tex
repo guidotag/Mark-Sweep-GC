@@ -369,7 +369,7 @@ Medimos además, para la versión con conjunto de direcciones, la memoria que oc
 \label{fig:memoria}
 \end{figure}
 
-Se puede ver que la memoria necesaria crece en forma aproximadamente lineal en la cantidad de objetos. Para 1000 objetos (u 80000B $\approx$ 80kB) , la memoria necesaria es aproximadamente 50kB. Para 2500 objetos (o 500000B $\approx$ 500kB), el requerimiento es de casi 200KB. Para 5000 objetos (o 2000000B $\approx$ 2000kB), el tamaño en memoria termina siendo un poco más de 350kB. Notemos que a medida que la cantidad de objetos crece, el espacio requerido por el conjunto se vuelve despreciable respecto del espacio requerido por los objetos.
+Se puede ver que la memoria necesaria crece en forma aproximadamente lineal en la cantidad de objetos. Para 1000 objetos (u 80000B $\approx$ 80kB) , la memoria necesaria es aproximadamente 50kB. Para 2500 objetos (o 500000B $\approx$ 500kB), el requerimiento es de casi 200kB. Para 5000 objetos (o 2000000B $\approx$ 2000kB), el tamaño en memoria termina siendo un poco más de 350kB. Notemos que a medida que la cantidad de objetos crece, el espacio requerido por el conjunto se vuelve despreciable respecto del espacio requerido por los objetos.
 
 De todo este análisis podemos concluir que hay un notable trade-off entre costo espacial y temporal de una versión a la otra. Mientras que la versión estándar no usa memoria adicional aparte de la empleada por la pila de memoria a lo largo de las llamadas recursivas, es 100 veces más lenta que la versión con conjunto de direcciones, pese a que esta última requiere una notable cantidad de memoria adicional. Esta segunda versión, más rápida pero más costosa en términos espaciales, parece más adecuada en, al menos, dos situaciones:
 
