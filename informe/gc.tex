@@ -65,7 +65,7 @@ La idea de \textsc{New} es que cuando la memoria libre se haya agotado, es decir
 %Notemos que el Algoritmo \ref{algo:algoritmo6} devuelve siempre la primer celda libre. En el caso general, en el que no todas las celdas tienen el mismo tamaño, la celda devuelta podría ser cualquier otra.
 
 \begin{algorithm}
-	\dontprintsemicolon
+	\DontPrintSemicolon
 	\SetKwInOut{Input}{input}
 	\SetKwInOut{Output}{output}
 	\Input{-}
@@ -89,7 +89,7 @@ La idea de \textsc{New} es que cuando la memoria libre se haya agotado, es decir
 \end{algorithm}
 
 \begin{algorithm}
-	\dontprintsemicolon
+	\DontPrintSemicolon
 	\SetKwInOut{Input}{input}
 	\SetKwInOut{Output}{output}
 	\Input{-}
@@ -107,7 +107,7 @@ La idea de \textsc{New} es que cuando la memoria libre se haya agotado, es decir
 \end{algorithm}
 
 \begin{algorithm}
-	\dontprintsemicolon
+	\DontPrintSemicolon
 	\SetKwInOut{Input}{input}
 	\SetKwInOut{Output}{output}
 	\Input{$c$ celda de memoria}
@@ -126,7 +126,7 @@ La idea de \textsc{New} es que cuando la memoria libre se haya agotado, es decir
 \end{algorithm}
 
 \begin{algorithm}
-	\dontprintsemicolon
+	\DontPrintSemicolon
 	\SetKwInOut{Input}{input}
 	\SetKwInOut{Output}{output}
 	\Input{-}
@@ -151,7 +151,7 @@ La operación $\textsc{New}$ utiliza la función $\textsc{Get-Object}$ que dada 
 Por otro lado, la lista de nodos root suma un nuevo elemento cada vez que el cuerpo principal del programa adquiere una referencia a un objeto. Dado que nuestra construcción del GC se realiza por fuera de un lenguaje, no podemos realizar esta actualización de nodos root en forma automática. Necesitamos que el programa que utiliza el GC marque explícitamente cuáles objetos serán root.
 
 \begin{algorithm}
-	\dontprintsemicolon
+	\DontPrintSemicolon
 	\SetKwInOut{Input}{input}
 	\SetKwInOut{Output}{output}
 	\Input{$o$ objeto}
@@ -170,7 +170,7 @@ La operación $\textsc{Set-Root}$ utiliza la función $\textsc{Get-Cell}$ que da
 Análogamente necesitamos una función para indicar que ya no deseamos mantener una referencia a un objeto.
 
 \begin{algorithm}
-	\dontprintsemicolon
+	\DontPrintSemicolon
 	\SetKwInOut{Input}{input}
 	\SetKwInOut{Output}{output}
 	\Input{$p$ puntero a un objeto}
@@ -206,7 +206,7 @@ La capacidad de un GC para detectar punteros en memoria se denomina \textit{type
 Para detectar los punteros en una celda, nuestro GC recorre la memoria del objeto asociado, tomando bloques de bytes consecutivos, de tamaño igual al de un puntero en la arquitectura de la máquina (por ejemplo, en AMD64 toma bloques de 8 bytes). Para cada uno de estos bloques, chequea si el valor que contiene es la dirección de algún objeto en la $live\_list$. Así aseguramos que el GC solo pueda cometer errores del tipo falsos positivos leves.
 
 \begin{algorithm}
-	\dontprintsemicolon
+	\DontPrintSemicolon
 	\SetKwInOut{Input}{input}
 	\SetKwInOut{Output}{output}
 	\Input{$c$ celda de memoria}
@@ -244,7 +244,7 @@ Para reducir este tiempo tenemos que aminorar el costo $\mathcal{O}(n)$ de cada 
 Si bien el segundo método le gana en costo temporal al primero, su complejidad espacial es mayor, pues utiliza memoria adicional para almacenar el trie.
 
 \begin{algorithm}
-	\dontprintsemicolon
+	\DontPrintSemicolon
 	\SetKwInOut{Input}{input}
 	\SetKwInOut{Output}{output}
 	\Input{-}
@@ -265,7 +265,7 @@ Si bien el segundo método le gana en costo temporal al primero, su complejidad 
 \end{algorithm}
 
 \begin{algorithm}
-	\dontprintsemicolon
+	\DontPrintSemicolon
 	\SetKwInOut{Input}{input}
 	\SetKwInOut{Output}{output}
 	\Input{$T$ conjunto de direcciones\\$c$ celda de memoria}
@@ -369,7 +369,7 @@ Medimos además, para la versión con conjunto de direcciones, la memoria que oc
 \label{fig:memoria}
 \end{figure}
 
-Se puede ver que la memoria necesaria crece en forma aproximadamente lineal en la cantidad de objetos. Para 1000 objetos (u 80000B $\approx$ 80kB) , la memoria necesaria es aproximadamente 50kB. Para 2500 objetos (o 500000B $\approx$ 500kB), el requerimiento es de casi 200kB. Para 5000 objetos (o 2000000B $\approx$ 2000kB), el tamaño en memoria termina siendo un poco más de 350kB. Notemos que a medida que la cantidad de objetos crece, el espacio requerido por el conjunto se vuelve despreciable respecto del espacio requerido por los objetos.
+Se puede ver que la memoria necesaria crece en forma aproximadamente lineal en la cantidad de objetos. Para 1000 objetos (u 80000B = 80kB), la memoria necesaria es aproximadamente 50kB. Para 2500 objetos (o 500000B = 500kB), el requerimiento es de casi 200kB. Para 5000 objetos (o 2000000B = 2000kB), el tamaño en memoria termina siendo un poco más de 350kB. Notemos que a medida que la cantidad de objetos crece, el espacio requerido por el conjunto se vuelve despreciable respecto del espacio requerido por los objetos.
 
 De todo este análisis podemos concluir que hay un notable trade-off entre costo espacial y temporal de una versión a la otra. Mientras que la versión estándar no usa memoria adicional aparte de la empleada por la pila de memoria a lo largo de las llamadas recursivas, es 100 veces más lenta que la versión con conjunto de direcciones, pese a que esta última requiere una notable cantidad de memoria adicional. Esta segunda versión, más rápida pero más costosa en términos espaciales, parece más adecuada en, al menos, dos situaciones:
 
